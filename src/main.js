@@ -7,6 +7,9 @@ import router from './router'
 import Vant from 'vant'
 import 'vant/lib/index.less'
 
+// 引入通过 vuex 定义好的 store
+import store from '@/store/index.js'
+
 // 安装为 Vue 的插件
 Vue.use(Vant)
 
@@ -14,5 +17,7 @@ Vue.config.productionTip = false
 
 new Vue({
   router,
+  // 为了在 Vue 组件中访问 this.$store property，你需要为 Vue 实例提供创建好的 store。
+  store,
   render: h => h(App)
 }).$mount('#app')
