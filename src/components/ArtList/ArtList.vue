@@ -17,6 +17,7 @@
           v-for="item in artlist"
           :key="item.art_id"
           :article="item"
+          @remove-article="removeArt(item.art_id)"
         ></art-item>
       </van-list>
     </van-pull-refresh>
@@ -77,6 +78,14 @@ export default {
     },
     onRefresh() {
       this.initArtList()
+    },
+    removeArt(id) {
+      // 移除被标记了不感兴趣的文章
+      this.artlist = this.artlist.filter(item => item.art_id !== id)
+      // 移除多篇文章后，会导致屏幕出现空白，且导致上拉、下拉加载不生效问题，需要判断小于10时主动请求下一页的数据
+      if (this.artlist.length < 10) {
+        this.initArtList()
+      }
     }
   },
   created() {

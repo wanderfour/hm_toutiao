@@ -34,14 +34,58 @@
               article.pubdate | dateFormat
             }}</span
           >
-          <van-icon name="cross" class="cross-icon" />
+          <van-icon name="cross" class="cross-icon" @click="show = true" />
         </div>
       </template>
     </van-cell>
+    <!-- 一级反馈面板 -->
+    <!-- 解决动作面板上下滑动，引起 List 组件的下拉刷新，将ActionList 组件，通过get-container 属性挂载到 body 元素下（注：Chrome 浏览器测试没有遇到上诉问题） -->
+    <van-action-sheet
+      v-model="show"
+      cancel-text="取消"
+      get-container="body"
+      v-if="isFirst"
+    >
+      <div class="content">
+        <van-cell
+          v-for="(item, index) in actions"
+          :key="index"
+          :title="item.name"
+          clickable
+          class="action-item"
+          @click="onCellClick(item.name)"
+        />
+      </div>
+    </van-action-sheet>
+    <!-- 二级反馈面板 -->
+    <van-action-sheet
+      v-model="subShow"
+      cancel-text="返回"
+      @cancel="isFirst = true"
+      get-container="body"
+      v-else
+    >
+      <div class="content">
+        <!-- TODO:一级二级面板联动 -->
+        <van-cell
+          v-for="item in reports"
+          :key="item.type"
+          :title="item.label"
+          clickable
+          class="action-item"
+          @click="report(item.type)"
+        />
+      </div>
+    </van-action-sheet>
   </div>
 </template>
 
 <script>
+// 导入二级面板选项列表
+import reports from '@/api/reports.js'
+// 导入设置文章不感兴趣的 api
+import { dislikeArticleAPI, reportArticleAPI } from '@/api/homeAPI.js'
+
 export default {
   name: 'ArtItem',
   props: {
@@ -50,6 +94,54 @@ export default {
       required: true,
       default: function() {
         return {}
+      }
+    }
+  },
+  data() {
+    return {
+      show: false,
+      subShow: false,
+      isFirst: true,
+      // 一级面板选项数据
+      actions: [
+        { name: '不感兴趣' },
+        { name: '反馈垃圾内容' },
+        { name: '拉黑作者' }
+      ],
+      // 二级面板选项数据
+      reports
+    }
+  },
+  methods: {
+    onCellClick(name) {
+      if (name === '不感兴趣') {
+        this.show = false
+        this.dislike()
+        // 将文章id发给父组件
+        this.$emit('remove-article', this.article.art_id)
+      } else if (name === '拉黑作者') {
+        this.show = false
+      } else if (name === '反馈垃圾内容') {
+        this.isFirst = false
+        this.subShow = true
+      }
+    },
+    async dislike() {
+      const { data: res } = await dislikeArticleAPI(this.article.art_id)
+      if (res.message === 'OK') {
+        this.$toast('反馈成功')
+      } else {
+        this.$toast('反馈没有成功')
+      }
+    },
+    async report(type) {
+      const { data: res } = await reportArticleAPI(this.article.art_id, type)
+      if (res.message === 'OK') {
+        this.$toast('反馈成功')
+        this.$emit('remove-article', this.article.art_id)
+        this.subShow = false
+      } else {
+        this.$toast('反馈没有成功')
       }
     }
   }
@@ -78,6 +170,11 @@ export default {
   .thumb-box {
     display: flex;
     justify-content: space-between;
+  }
+}
+.content {
+  .action-item {
+    text-align: center;
   }
 }
 </style>
