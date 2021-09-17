@@ -15,18 +15,59 @@
         <van-icon name="search" size="18" />
       </template>
     </van-nav-bar>
-    <h1>Home</h1>
+    <!-- Tab -->
+    <!-- offset-top 采用rem单位，增加不同尺寸下的适配性，46px / (375/10) =1.22666667rem -->
+    <!-- TODO:亲测，设置为rem会让tab与navbar重叠，暂不设置rem -->
+    <van-tabs v-model="active" sticky offset-top="46px" ellipsis lazy-render>
+      <van-tab v-for="item in channelList" :key="item.id" :title="item.name">
+        <h1># {{ item.id }} {{ item.name }}</h1>
+      </van-tab>
+    </van-tabs>
+    <!-- 管理频道的小图片 + -->
+    <van-icon name="plus" />
+
+    <!-- TODO:渲染文章列表 -->
   </div>
 </template>
 
 <script>
+import { getUserChannelAPI } from '@/api/homeAPI.js'
+
 export default {
-  name: 'Home'
+  name: 'Home',
+  data() {
+    return {
+      active: 0,
+      channelList: []
+    }
+  },
+  methods: {
+    async initUserChannel() {
+      const { data: res } = await getUserChannelAPI()
+      if (res.message === 'OK') {
+        this.channelList = res.data.channels
+      } else {
+        this.$toast.fail('导航数据获取失败')
+      }
+    }
+  },
+  created() {
+    this.initUserChannel()
+  }
 }
 </script>
 
 <style lang="less" scoped>
 .home-container {
   padding: 46px 0 50px 0;
+  /deep/ .van-tabs__wrap {
+    padding-right: 44px;
+  }
+  .van-icon-plus {
+    position: fixed;
+    top: 58px;
+    right: 10px;
+    z-index: 999;
+  }
 }
 </style>
