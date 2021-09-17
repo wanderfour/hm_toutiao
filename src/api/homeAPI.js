@@ -1,8 +1,13 @@
 import request from '@/utils/request.js'
 
-// 获取文章频道列表的api
+// 获取用户文章频道列表的api
 export const getUserChannelAPI = () => {
   return request.get('/v1_0/user/channels')
+}
+
+// 获取全部文章频道列表的api
+export const getAllChannelAPI = () => {
+  return request.get('/v1_0/channels')
 }
 
 // 获取文章列表的api
@@ -29,5 +34,12 @@ export const reportArticleAPI = (target, type) => {
   return request.post('/v1_0/article/reports', {
     target,
     type
+  })
+}
+
+// 更新用户频道列表数据的 API
+export const updateUserChannelAPI = channels => {
+  return request.put('/v1_0/user/channels', {
+    channels
   })
 }
