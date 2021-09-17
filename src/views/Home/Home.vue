@@ -20,18 +20,17 @@
     <!-- TODO:亲测，设置为rem会让tab与navbar重叠，暂不设置rem -->
     <van-tabs v-model="active" sticky offset-top="46px" ellipsis lazy-render>
       <van-tab v-for="item in channelList" :key="item.id" :title="item.name">
-        <h1># {{ item.id }} {{ item.name }}</h1>
+        <art-list :channel-id="item.id"></art-list>
       </van-tab>
     </van-tabs>
     <!-- 管理频道的小图片 + -->
     <van-icon name="plus" />
-
-    <!-- TODO:渲染文章列表 -->
   </div>
 </template>
 
 <script>
 import { getUserChannelAPI } from '@/api/homeAPI.js'
+import ArtList from '@/components/ArtList/ArtList.vue'
 
 export default {
   name: 'Home',
@@ -41,13 +40,16 @@ export default {
       channelList: []
     }
   },
+  components: {
+    ArtList
+  },
   methods: {
     async initUserChannel() {
       const { data: res } = await getUserChannelAPI()
       if (res.message === 'OK') {
         this.channelList = res.data.channels
       } else {
-        this.$toast.fail('导航数据获取失败')
+        this.$toast({ message: '导航数据获取失败' }, { position: top })
       }
     }
   },
@@ -61,7 +63,8 @@ export default {
 .home-container {
   padding: 46px 0 50px 0;
   /deep/ .van-tabs__wrap {
-    padding-right: 44px;
+    padding-right: 36px;
+    background-color: #fff;
   }
   .van-icon-plus {
     position: fixed;

@@ -1,5 +1,14 @@
-import instance from '@/utils/request.js'
+import request from '@/utils/request.js'
 
 export const getUserChannelAPI = () => {
-  return instance.get('/v1_0/user/channels')
+  return request.get('/v1_0/user/channels')
+}
+
+export const getArtListAPI = (id, time) => {
+  return request.get('/v1_0/articles', {
+    params: {
+      channel_id: id,
+      timestamp: time
+    }
+  })
 }
