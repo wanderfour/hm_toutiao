@@ -1,10 +1,11 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Main from '@/views/Main/Main.vue'
-// import App from '@/views/App.vue'
 import Home from '@/views/Home/Home.vue'
 import User from '@/views/User/User.vue'
 import Login from '@/views/Login/Login.vue'
+import Search from '@/views/Search/Search.vue'
+import SearchResult from '@/views/SearchResult/SearchResult.vue'
 
 Vue.use(VueRouter)
 
@@ -18,7 +19,14 @@ const routes = [
       { path: '/user', component: User, name: 'user' }
     ]
   },
-  { path: '/login', component: Login, name: 'login' }
+  { path: '/login', component: Login, name: 'login' },
+  { path: '/search', component: Search, name: 'search' },
+  {
+    path: '/search/:kw',
+    component: SearchResult,
+    name: 'search-result',
+    props: true
+  }
 ]
 
 const router = new VueRouter({

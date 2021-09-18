@@ -12,7 +12,8 @@
         />
       </template>
       <template #right>
-        <van-icon name="search" size="18" />
+        <!-- TODO:开发文章搜索功能 -->
+        <van-icon name="search" size="18" @click="$router.push('/search')" />
       </template>
     </van-nav-bar>
     <!-- Tab -->

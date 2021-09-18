@@ -34,7 +34,12 @@
               article.pubdate | dateFormat
             }}</span
           >
-          <van-icon name="cross" class="cross-icon" @click="show = true" />
+          <van-icon
+            name="cross"
+            class="cross-icon"
+            @click="show = true"
+            v-if="closable"
+          />
         </div>
       </template>
     </van-cell>
@@ -95,6 +100,11 @@ export default {
       default: function() {
         return {}
       }
+    },
+    // 控制不同父组件对关闭按钮的要求
+    closable: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
