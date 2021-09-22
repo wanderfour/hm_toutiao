@@ -17,7 +17,6 @@
     </van-nav-bar>
     <!-- Tab -->
     <!-- offset-top 采用rem单位，增加不同尺寸下的适配性，46px / (375/10) =1.22666667rem -->
-    <!-- TODO:亲测，设置为rem会让tab与navbar重叠，暂不设置rem -->
     <!-- TODO:开发文章详情功能 -->
     <van-tabs
       v-model="activeName"

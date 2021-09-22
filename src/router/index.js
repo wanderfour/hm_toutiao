@@ -6,6 +6,7 @@ import User from '@/views/User/User.vue'
 import Login from '@/views/Login/Login.vue'
 import Search from '@/views/Search/Search.vue'
 import SearchResult from '@/views/SearchResult/SearchResult.vue'
+import ArticleDetail from '@/views/ArticleDetail/ArticleDetail.vue'
 
 Vue.use(VueRouter)
 
@@ -25,6 +26,12 @@ const routes = [
     path: '/search/:kw',
     component: SearchResult,
     name: 'search-result',
+    props: true
+  },
+  {
+    path: '/article/:aid',
+    component: ArticleDetail,
+    name: 'article-detail',
     props: true
   }
 ]

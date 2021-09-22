@@ -1,5 +1,8 @@
 <template>
-  <div class="artitem-container">
+  <div
+    class="artitem-container"
+    @click="$router.push('/article/' + article.art_id)"
+  >
     <van-cell>
       <!-- 使用 title 插槽来自定义标题 -->
       <template #title>
