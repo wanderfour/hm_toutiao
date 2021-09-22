@@ -137,27 +137,29 @@ export default {
 <style lang="less" scoped>
 .search-header {
   display: flex;
+  // position: fixed;
+  // z-index: 999;
   background-color: #007bff;
-  height: 46px;
+  height: 1.226667rem;
   width: 100%;
-  padding: 0 14px;
+  padding: 0 0.373333rem;
   align-items: center;
   .van-search {
     flex: 1;
-    margin-right: 14px;
-    height: 46px;
+    margin-right: 0.373333rem;
+    height: 1.226667rem;
     background-color: #007bff;
   }
 }
 .search-suggest {
   background-color: #fff;
   .suggest-item {
-    height: 46px;
-    margin: 0 14px;
-    border-bottom: 1px solid #efefef;
+    height: 1.226667rem;
+    margin: 0 0.373333rem;
+    border-bottom: 0.026667rem solid #efefef;
     background-color: #fff;
-    line-height: 46px;
-    font-size: 14px;
+    line-height: 1.226667rem;
+    font-size: 0.373333rem;
     // 超出一行用省略号代替
     white-space: nowrap;
     overflow: hidden;
@@ -165,18 +167,18 @@ export default {
   }
 }
 .delete-icon {
-  font-size: 16px;
+  font-size: 0.426667rem;
   line-height: inherit;
 }
 .history-list {
-  padding: 14px;
-  font-size: 12px;
+  padding: 0.373333rem;
+  font-size: 0.32rem;
   .history-item {
     display: inline-block;
-    padding: 8px 14px;
-    margin: 6px 12px 6px 0;
+    padding: 0.213333rem 0.373333rem;
+    margin: 0.16rem 0.32rem 0.16rem 0;
     background-color: #efefef;
-    border-radius: 8px;
+    border-radius: 0.213333rem;
   }
 }
 </style>

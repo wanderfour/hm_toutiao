@@ -17,6 +17,9 @@ import relativeTime from 'dayjs/plugin/relativeTime'
 // 导入中文语言包
 import zh from 'dayjs/locale/zh-cn'
 
+// 引入rem布局适配插件
+import 'amfe-flexible'
+
 // 安装为 Vue 的插件
 Vue.use(Vant)
 Vue.use(Lazyload)

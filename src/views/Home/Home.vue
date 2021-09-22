@@ -5,24 +5,24 @@
       <template #left>
         <!-- 在 .vue 文件中通过相对路径引用本地图片时，需要在图片的链接外包上一层 require()，将图片 URL 转换为 webpack 模块请求，并结合 file-loader 或者 url-loader 进行处理。 -->
         <van-image
-          height="36px"
+          height=".986667rem"
           alt="logo"
           :src="require('../../assets/toutiao_logo.png')"
           class="logo"
         />
       </template>
       <template #right>
-        <!-- TODO:开发文章搜索功能 -->
         <van-icon name="search" size="18" @click="$router.push('/search')" />
       </template>
     </van-nav-bar>
     <!-- Tab -->
     <!-- offset-top 采用rem单位，增加不同尺寸下的适配性，46px / (375/10) =1.22666667rem -->
     <!-- TODO:亲测，设置为rem会让tab与navbar重叠，暂不设置rem -->
+    <!-- TODO:开发文章详情功能 -->
     <van-tabs
       v-model="activeName"
       sticky
-      offset-top="46px"
+      offset-top="1.22666667rem"
       ellipsis
       lazy-render
     >
@@ -36,7 +36,7 @@
       </van-tab>
     </van-tabs>
     <!-- 管理频道的小图片 + -->
-    <van-icon name="plus" @click="showPopup" class="icon-plus" />
+    <van-icon name="plus" @click="showPopup" class="channel-icon-plus" />
     <!-- 频道管理弹出层 -->
     <van-popup
       v-model="show"
@@ -206,58 +206,60 @@ export default {
 
 <style lang="less" scoped>
 .home-container {
-  padding: 46px 0 50px 0;
+  padding: 1.226667rem 0 1.333333rem 0;
   /deep/ .van-tabs__wrap {
-    padding-right: 36px;
+    position: relative;
+    padding-right: 0.96rem;
     background-color: #fff;
   }
-  .icon-plus {
+  .channel-icon-plus {
     position: fixed;
-    top: 58px;
-    right: 10px;
+    top: 1.6rem;
+    right: 0.266667rem;
     z-index: 999;
+    font-size: 0.426667rem;
   }
 }
 .other-channel,
 .my-channal {
-  padding: 8px;
+  padding: 0.213333rem;
   .channal-hd {
     display: flex;
-    padding: 0 6px;
+    padding: 0 0.16rem;
     justify-content: space-between;
     .left {
       font-weight: 700;
-      font-size: 14px;
+      font-size: 0.373333rem;
       .desc {
         font-weight: 400;
-        font-size: 12px;
+        font-size: 0.32rem;
         color: #666;
       }
     }
     .right {
-      padding: 1px 10px;
-      border: 1px solid #999;
-      font-size: 12px;
-      border-radius: 4px;
+      padding: 0.266667rem 0.266667rem;
+      border: 0.026667rem solid #999;
+      font-size: 0.32rem;
+      border-radius: 0.106667rem;
     }
   }
   .channel-content {
     display: flex;
-    padding: 6px 0;
+    padding: 0.16rem 0;
     // flex-direction: column;
     .channel-item {
       position: relative;
       flex: 1;
-      margin: 6px;
-      line-height: 36px;
-      font-size: 12px;
+      margin: 0.16rem;
+      line-height: 0.96rem;
+      font-size: 0.32rem;
       text-align: center;
-      border: 1px solid #ebedf0;
+      border: 0.026667rem solid #ebedf0;
       background-color: #fafafa;
       .remove-item {
         position: absolute;
-        top: 6px;
-        right: 6px;
+        top: 0.16rem;
+        right: 0.16rem;
         .badge-icon {
           color: #bbb;
         }
@@ -267,7 +269,7 @@ export default {
 }
 .sp-line {
   border-color: #dadada;
-  padding: 0 14px;
-  margin: 0 0 10px 0;
+  padding: 0 0.373333rem;
+  margin: 0 0 0.266667rem 0;
 }
 </style>

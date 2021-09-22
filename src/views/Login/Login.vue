@@ -20,7 +20,7 @@
         required
         :rules="rules.code"
       />
-      <div style="margin: 16px;">
+      <div style="margin: .426667rem;">
         <van-button round block type="info" native-type="submit"
           >提交</van-button
         >
@@ -85,6 +85,6 @@ export default {
 <style lang="less" scoped>
 .login-container {
   z-index: 999;
-  padding: 46px 0 50px 0;
+  padding: 1.226667rem 0 1.333333rem 0;
 }
 </style>

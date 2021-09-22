@@ -71,7 +71,6 @@
       v-else
     >
       <div class="content">
-        <!-- TODO:一级二级面板联动 -->
         <van-cell
           v-for="item in reports"
           :key="item.type"
@@ -160,10 +159,10 @@ export default {
 
 <style lang="less" scoped>
 .van-cell {
-  padding: 10px 16px;
+  padding: 0.266667rem 0.426667rem;
   .thumb {
-    height: 70px;
-    width: 113px;
+    height: 1.866667rem;
+    width: 3.013333rem;
     background-color: #f8f8f8;
     object-fit: cover;
   }
