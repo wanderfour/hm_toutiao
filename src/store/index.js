@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+// 导入请求用户基本信息的 api
+import { getUserInfoAPI, getUserProfileAPI } from '@/api/userAPI.js'
+
 // 安装 Vuex 为 Vue 的插件
 Vue.use(Vuex)
 
@@ -8,7 +11,11 @@ Vue.use(Vuex)
 let initState = {
   // token 的信息对象
   // 用来存储 token 信息的对象，将来这个对象中会包含两个属性 {token, refresh_token}
-  tokenInfo: {}
+  tokenInfo: {},
+  // 用户基本信息
+  userInfo: {},
+  // 用户简介信息
+  userProfile: {}
 }
 
 // 读取localStorage中的 state 字符串
@@ -30,8 +37,41 @@ const store = new Vuex.Store({
       // state 更新时，同时更新本地存储中的 state，通过 this.commit() 方法调用函数
       this.commit('saveStateToStorage')
     },
+    // 更新 userInfo 的方法
+    updateUserInfo(state, payload) {
+      // 把用户信息转存到 state 中
+      state.userInfo = payload
+      // 将最新的 state 对象持久化存储到本地
+      this.commit('saveStateToStorage')
+    },
+    updateUserProfile(state, payload) {
+      state.userProfile = payload
+      this.commit('saveStateToStorage')
+    },
     saveStateToStorage(state) {
       localStorage.setItem('state', JSON.stringify(state))
+    },
+    cleanState(state) {
+      state.tokenInfo = {}
+      state.userInfo = {}
+      // 清空数据后，将state 存储到本地
+      this.commit('saveStateToStorage')
+    }
+  },
+  actions: {
+    async initUserInfo(ctx) {
+      // 调用获取用户信息接口
+      const { data: res } = await getUserInfoAPI()
+      if (res.message === 'OK') {
+        // 把数据转交给 Mutation 方法
+        ctx.commit('updateUserInfo', res.data)
+      }
+    },
+    async initUserProfile(ctx) {
+      const { data: res } = await getUserProfileAPI()
+      if (res.message === 'OK') {
+        ctx.commit('updateUserProfile', res.data)
+      }
     }
   }
 })

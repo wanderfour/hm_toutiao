@@ -145,9 +145,11 @@ export default {
 </script>
 
 <style lang="less" scoped>
+// TODO: http://localhost:8080/#/article/8125 样式问题
 .detail-container {
   padding: 1.493333rem 0.266667rem 1.333333rem;
   .article-box {
+    width: 100%;
     .title {
       font-size: 0.42667rem;
       margin: 0.266667rem 0;
@@ -165,7 +167,7 @@ export default {
     }
     .art-content {
       font-size: 0.32rem;
-      width: 100%;
+      width: 10rem;
       // 桌面浏览器总是显示滚动条，无论内容是否发生溢出。这可以避免滚动条的显示与消失所导致的元素尺寸不确定的问题。而打印机可能会打印溢出的内容。
       overflow-x: scroll;
       // 对于non-CJK (CJK 指中文/日文/韩文) 文本，可在任意字符间断行。
