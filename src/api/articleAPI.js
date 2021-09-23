@@ -28,3 +28,34 @@ export const likeArticleAPI = artId => {
 export const cancelLikeArticleAPI = artId => {
   return request.delete(`/v1_0/article/likings/${artId}`)
 }
+
+// 获取文章评论列表的 API
+export const getCmtListAPI = (artId, offset) => {
+  return request.get('/v1_0/comments', {
+    params: {
+      type: 'a',
+      source: artId,
+      offset
+    }
+  })
+}
+
+// 评论点赞 API
+export const cmtLikeAPI = cmtId => {
+  return request.post('/v1_0/comment/likings', {
+    target: cmtId
+  })
+}
+
+// 取消评论点赞 API
+export const cancelCmtLikeAPI = cmtId => {
+  return request.delete(`/v1_0/comment/likings/${cmtId}`)
+}
+
+// 发表文章评论 API
+export const pubCmtAPI = (artId, cmt) => {
+  return request.post('/v1_0/comments', {
+    target: artId,
+    content: cmt
+  })
+}

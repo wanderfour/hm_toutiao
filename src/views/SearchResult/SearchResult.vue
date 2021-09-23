@@ -74,7 +74,7 @@ export default {
         }
         this.page++
       } else {
-        this.$route('获取搜索结果失败')
+        this.$toast('获取搜索结果失败')
       }
     },
     onLoad() {

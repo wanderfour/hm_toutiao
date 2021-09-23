@@ -1,5 +1,6 @@
 <template>
   <div class="detail-container">
+    <!-- TODO:返回文章列表，列表不刷新且记住滚轮位置 -->
     <!-- header -->
     <van-nav-bar
       class="detail-navbar"
@@ -73,9 +74,11 @@
           点赞
         </van-button>
       </div>
-      <!-- 评论列表 -->
     </div>
-    <!-- 发表评论 -->
+    <!-- 文章评论 -->
+    <div class="cmt-box">
+      <art-cmt :art-id="aid"></art-cmt>
+    </div>
   </div>
 </template>
 
@@ -87,9 +90,13 @@ import {
   likeArticleAPI,
   cancelLikeArticleAPI
 } from '@/api/articleAPI.js'
+import ArtCmt from '@/components/ArtCmt/ArtCmt.vue'
 
 export default {
   name: 'ArticleDetail',
+  components: {
+    ArtCmt
+  },
   props: ['aid'],
   data() {
     return {
@@ -102,7 +109,7 @@ export default {
       if (res.message === 'OK') {
         this.artDetail = res.data
       } else {
-        this.$route('获取文章内容失败')
+        this.$toast('获取文章内容失败')
       }
     },
     async follow() {
@@ -139,40 +146,37 @@ export default {
 
 <style lang="less" scoped>
 .detail-container {
-  width: 10rem;
-  .detail-navbar {
-    width: 10rem;
-  }
-}
-.article-box {
   padding: 1.493333rem 0.266667rem 1.333333rem;
-  .title {
-    font-size: 0.42667rem;
-    margin: 0.266667rem 0;
-  }
-  .author-box {
-    // display: flex;
-    padding: 0.266667rem 0;
-
-    .avatar {
-      width: 1.6rem;
-      border-radius: 50%;
-      margin-right: 0.16rem;
+  .article-box {
+    .title {
+      font-size: 0.42667rem;
+      margin: 0.266667rem 0;
     }
-    &::after {
-      display: none;
+    .author-box {
+      padding: 0.266667rem 0;
+      .avatar {
+        width: 1.6rem;
+        border-radius: 50%;
+        margin-right: 0.16rem;
+      }
+      &::after {
+        display: none;
+      }
+    }
+    .art-content {
+      font-size: 0.32rem;
+      width: 100%;
+      // 桌面浏览器总是显示滚动条，无论内容是否发生溢出。这可以避免滚动条的显示与消失所导致的元素尺寸不确定的问题。而打印机可能会打印溢出的内容。
+      overflow-x: scroll;
+      // 对于non-CJK (CJK 指中文/日文/韩文) 文本，可在任意字符间断行。
+      word-break: break-all;
+    }
+    .like-box {
+      text-align: center;
     }
   }
-  .art-content {
-    font-size: 0.32rem;
-    width: 100%;
-    // 桌面浏览器总是显示滚动条，无论内容是否发生溢出。这可以避免滚动条的显示与消失所导致的元素尺寸不确定的问题。而打印机可能会打印溢出的内容。
-    overflow-x: scroll;
-    // 对于non-CJK (CJK 指中文/日文/韩文) 文本，可在任意字符间断行。
-    word-break: break-all;
-  }
-  .like-box {
-    text-align: center;
+  .cmt-box {
+    padding: 0.8rem 0;
   }
 }
 </style>
