@@ -73,6 +73,18 @@ const store = new Vuex.Store({
         ctx.commit('updateUserProfile', res.data)
       }
     }
+  },
+  getters: {
+    // 用户头像的计算属性
+    userAvatar(state) {
+      // 默认头像地址
+      let imgSrc = 'https://img.yzcdn.cn/vant/cat.jpeg'
+      // 如果用户信息对象中包含 photo 属性的值，则为 imgSrc重新赋值
+      if (state.userInfo.photo) {
+        imgSrc = state.userInfo.photo
+      }
+      return imgSrc
+    }
   }
 })
 

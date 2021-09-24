@@ -45,7 +45,7 @@
           <van-icon name="edit" class="edit-icon menu-icon" />
         </template>
       </van-cell>
-      <van-cell title="小思同学" center is-link to="index">
+      <van-cell title="小思同学" center is-link to="/chat">
         <template #icon>
           <van-icon name="chat-o" class="chat-icon menu-icon" />
         </template>
