@@ -71,10 +71,11 @@ export default {
         // 把登录成功的结果，存储到 vuex 的一个 store 中
         // 存储在 vuex 中的数据都是内存数据，只要浏览器一刷新，vuex 的数据就被清空了
         this.updateTokenInfo(res.data)
-        // 登录成功提示
-        this.$toast.success('登录成功')
+
+        // 如果登录页面有查询参数，记录访问未遂的页面，则跳转到访问未遂的页面，否则跳转到首页
+        const navPath = this.$route.query.pre || '/'
         // 登录成功后，跳转到主页
-        this.$router.push('/')
+        this.$router.push(navPath)
       }
     }
   },

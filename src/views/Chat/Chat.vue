@@ -96,25 +96,22 @@ export default {
     scrollToBottom() {
       // 获取所有的聊天item项
       const chatItem = document.querySelectorAll('.chat-item')
-      console.log(chatItem)
       // 获取 chatItem 最后一个项
       const lastItem = chatItem[chatItem.length - 1]
-      console.log(lastItem)
-
       // Element 接口的scrollIntoView()方法会滚动元素的父容器，使被调用scrollIntoView()的元素对用户可见。
-      lastItem.scrollIntoView()
+      lastItem.scrollIntoView({
+        // 定义动画过渡效果
+        behavior: 'smooth',
+        // 定义垂直方向的对齐
+        block: 'end'
+      })
     }
   },
   watch: {
     chatList() {
       // 监视数据变化，并等dom更新后，再执行滚动到底部的操作
       this.$nextTick(() => {
-        this.scrollToBottom({
-          // 定义动画过渡效果
-          behavior: 'smooth',
-          // 定义垂直方向的对齐
-          block: 'end'
-        })
+        this.scrollToBottom()
       })
     }
   },
@@ -129,9 +126,6 @@ export default {
     socket.on('message', msg => {
       // 将服务器发送过来的消息，存储到 chatList 数组中
       this.chatList.push({ name: 'xs', msg })
-
-      // 调用滚动到页面底部的函数
-      this.scrollToBottom()
     })
 
     // 监听关闭连接的事件
