@@ -54,6 +54,7 @@ const store = new Vuex.Store({
     cleanState(state) {
       state.tokenInfo = {}
       state.userInfo = {}
+      state.userProfile = {}
       // 清空数据后，将state 存储到本地
       this.commit('saveStateToStorage')
     }

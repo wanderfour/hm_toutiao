@@ -26,3 +26,12 @@ export const updateUserProfileAPI = obj => {
 export const updateUserPhotoAPI = photo => {
   return request.patch('/v1_0/user/photo', photo)
 }
+
+// 根据 refresh_token 换取新 token 的 API
+export const exchangeTokenAPI = refreshToken => {
+  return request.put('/v1_0/authorizations', {
+    Headers: {
+      Authorization: 'Bearer' + refreshToken
+    }
+  })
+}
