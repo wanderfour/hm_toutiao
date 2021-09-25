@@ -1,6 +1,5 @@
 <template>
   <div class="detail-container">
-    <!-- TODO:返回文章列表，列表不刷新且记住滚轮位置 -->
     <!-- header -->
     <van-nav-bar
       class="detail-navbar"
@@ -92,6 +91,9 @@ import {
 } from '@/api/articleAPI.js'
 import ArtCmt from '@/components/ArtCmt/ArtCmt.vue'
 
+// 引入代码片段高亮第三方包
+import hljs from 'highlight.js'
+
 export default {
   name: 'ArticleDetail',
   components: {
@@ -101,6 +103,14 @@ export default {
   data() {
     return {
       artDetail: ''
+    }
+  },
+  watch: {
+    aid() {
+      // 监听 aid 变化，解决 keep-alive缓存内容不变化问题，变化后清空文章信息
+      this.artDetail = ''
+      // 并重新获取文章的详情数据
+      this.initArticleDetail()
     }
   },
   methods: {
@@ -127,19 +137,34 @@ export default {
     },
     async like() {
       const { data: res } = await likeArticleAPI(this.aid)
+      console.log(res)
       if (res.message === 'OK') {
-        this.artDetail.attitude = 1
+        // this.artDetail.attitude = 1
       }
     },
     async cancelLike() {
       const res = await cancelLikeArticleAPI(this.aid)
       if (res.status === 204) {
-        this.artDetail.attitude = -1
+        // this.artDetail.attitude = -1
       }
     }
   },
   created() {
     this.initArticleDetail()
+  },
+  // 当组件的dom更新完毕后处理
+  updated() {
+    // 判断是否有文章内容
+    if (this.artDetail) {
+      hljs.highlightAll()
+    }
+  },
+  // 组件内守卫，用于记录离开组件前滚动条位置
+  beforeRouteLeave(to, from, next) {
+    from.meta.top = window.scrollY
+    setTimeout(() => {
+      next()
+    }, 0)
   }
 }
 </script>
@@ -147,9 +172,17 @@ export default {
 <style lang="less" scoped>
 // TODO: http://localhost:8080/#/article/8125 样式问题
 .detail-container {
+  box-sizing: border-box;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   padding: 1.493333rem 0.266667rem 1.333333rem;
   .article-box {
+    height: 100%;
     width: 100%;
+    overflow-y: scroll;
     .title {
       font-size: 0.42667rem;
       margin: 0.266667rem 0;
@@ -167,7 +200,7 @@ export default {
     }
     .art-content {
       font-size: 0.32rem;
-      width: 10rem;
+      width: 100%;
       // 桌面浏览器总是显示滚动条，无论内容是否发生溢出。这可以避免滚动条的显示与消失所导致的元素尺寸不确定的问题。而打印机可能会打印溢出的内容。
       overflow-x: scroll;
       // 对于non-CJK (CJK 指中文/日文/韩文) 文本，可在任意字符间断行。

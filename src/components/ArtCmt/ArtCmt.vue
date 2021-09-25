@@ -105,7 +105,7 @@ export default {
     return {
       offset: null,
       cmtList: [],
-      loading: false,
+      loading: true,
       finished: false,
       cmtLiking: false,
       isIpt: false,
@@ -211,6 +211,7 @@ export default {
   .cmt-bd {
     padding: 0.32rem;
     font-size: 0.373333rem;
+    overflow-wrap: break-word;
   }
   .pubdate {
     font-size: 0.32rem;

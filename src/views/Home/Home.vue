@@ -23,6 +23,8 @@
       offset-top="1.22666667rem"
       ellipsis
       lazy-render
+      :before-change="beforeTabChange"
+      @change="onTabChange"
     >
       <van-tab
         v-for="item in channelList"
@@ -30,6 +32,7 @@
         :title="item.name"
         :name="item.id"
       >
+        <!-- 文章列表组件 -->
         <art-list :channel-id="item.id"></art-list>
       </van-tab>
     </van-tabs>
@@ -119,7 +122,9 @@ export default {
       // 排除用户频道的其他频道列表
       allChannel: [],
       show: false,
-      isDel: false
+      isDel: false,
+      // 记录频道id和滚动条位置之间的对应关系
+      nameToTop: {}
     }
   },
   components: {
@@ -187,17 +192,36 @@ export default {
         })
       // 调用接口 put 数据
       const { data: res } = await updateUserChannelAPI(channels)
-      console.log(res)
       if (res.message === '更新用户频道成功') {
         this.$toast({ message: '更新用户频道成功' }, { position: top })
       } else {
         this.$toast({ message: '更新用户频道失败' }, { position: top })
       }
+    },
+    beforeTabChange() {
+      // 用于记录每个tab下的滚动条位置
+      const channelId = this.channelList[this.activeName].id
+      this.nameToTop[channelId] = window.scrollY
+      // return true 表示允许进行标签页的切换
+      return true
+    },
+    onTabChange() {
+      this.$nextTick(() => {
+        const channelId = this.channelList[this.activeName].id
+        window.scrollTo(0, this.nameToTop[channelId] || 0)
+      })
     }
   },
   created() {
     this.initUserChannel()
     this.initAllChannel()
+  },
+  // 通过组件内守卫，记录页面纵向滚动位置
+  // 导航离开该组件的对应路由时调用
+  // 可以访问组件实例 `this`
+  beforeRouteLeave(to, from, next) {
+    from.meta.top = window.scrollY
+    next()
   }
 }
 </script>

@@ -91,7 +91,7 @@ export default {
         this.suggestList = res.data.options
 
         // 将搜索关键词加入到搜索历史中
-        if (this.kw === 0) return
+        if (this.kw.length === 0) return
         const newHistory = this.history.filter(item => item !== this.kw)
         newHistory.unshift(this.kw)
         this.history = newHistory

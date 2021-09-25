@@ -118,20 +118,12 @@ export default {
   created() {
     // 创建客户端 websocket 的实例
     socket = io('ws://www.liulongbin.top:9999')
-    // 监听建立连接的事件
-    // socket.on('connect', () => {
-    //   console.log('connect')
-    // })
+
     // 监听接收到消息的事件
     socket.on('message', msg => {
       // 将服务器发送过来的消息，存储到 chatList 数组中
       this.chatList.push({ name: 'xs', msg })
     })
-
-    // 监听关闭连接的事件
-    // socket.on('disconnect', () => {
-    //   console.log('disconnect')
-    // })
   },
   beforeDestroy() {
     // 关闭连接

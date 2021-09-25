@@ -21,7 +21,12 @@ const routes = [
     path: '/',
     component: Main,
     children: [
-      { path: '', component: Home, name: 'home' },
+      {
+        path: '',
+        component: Home,
+        name: 'home',
+        meta: { isRecord: true, top: 0 }
+      },
       { path: '/user', component: User, name: 'user' }
     ]
   },
@@ -31,13 +36,18 @@ const routes = [
     path: '/search/:kw',
     component: SearchResult,
     name: 'search-result',
-    props: true
+    props: true,
+    meta: { isRecord: true, top: 0 }
   },
   {
     path: '/article/:aid',
     component: ArticleDetail,
     name: 'article-detail',
-    props: true
+    props: true,
+    meta: {
+      isRecord: true,
+      top: 0
+    }
   },
   { path: '/user/edit', component: UserEdit, name: 'user-edit' },
   { path: '/chat', component: Chat, name: 'chat' }
@@ -69,6 +79,16 @@ router.beforeEach((to, from, next) => {
   } else {
     // 访问没有权限控制的页面直接跳转
     next()
+  }
+})
+
+// 全局后置钩子
+router.afterEach((to, from) => {
+  // 如果当前路由元信息中的 isRecord 为 true
+  if (to.meta.isRecord) {
+    setTimeout(() => {
+      window.scrollTo(0, to.meta.top)
+    }, 0)
   }
 })
 

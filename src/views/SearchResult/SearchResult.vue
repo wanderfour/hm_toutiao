@@ -50,6 +50,17 @@ export default {
   components: {
     ArtItem
   },
+  watch: {
+    kw() {
+      // 重置关键数据，解决页面内容被缓存不更新问题
+      this.page = 1
+      this.searchResultList = []
+      this.loading = false
+      this.refreshing = false
+      // 重新请求页面数据
+      this.initSearchResult()
+    }
+  },
   methods: {
     async initSearchResult() {
       const { data: res } = await getSearchResultAPI(this.kw, this.page)
@@ -86,6 +97,12 @@ export default {
   },
   created() {
     this.initSearchResult()
+  },
+  beforeRouteLeave(to, from, next) {
+    from.meta.top = window.scrollY
+    setTimeout(() => {
+      next()
+    }, 0)
   }
 }
 </script>

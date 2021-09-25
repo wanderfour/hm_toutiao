@@ -13,6 +13,9 @@
         :immediate-check="false"
         @load="onLoad"
       >
+        <!-- 解决 ArtList 组件的 key 冲突问题 -->
+        <!-- 原因：一进入 ArtList.vue 组件中，会立即触发 created 生命周期函数，请求文章列表的数据。由于 data 中的 loading 值的默认值为 false，因此一进入页面，会立即触发一次 <van-list> 组件的 load 事件 -->
+        <!-- 解决：loading 默认值改为 true -->
         <art-item
           v-for="item in artlist"
           :key="item.art_id"
@@ -42,7 +45,7 @@ export default {
       artlist: [],
       timestamp: Date.now(),
       // 显示上拉加载请求状态
-      loading: false,
+      loading: true,
       // 显示所有是否数据是否加载完毕
       finished: false,
       // 显示下拉刷新状态

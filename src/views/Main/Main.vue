@@ -1,7 +1,9 @@
 <template>
   <div class="main-container">
     <!-- 路由占位符 -->
-    <router-view></router-view>
+    <keep-alive>
+      <router-view></router-view>
+    </keep-alive>
     <!-- 底部 Tabbar -->
     <van-tabbar route>
       <van-tabbar-item to="/" icon="home-o">首页</van-tabbar-item>
