@@ -67,11 +67,8 @@ instance.interceptors.response.use(
       tokenInfo.refresh_token
     ) {
       try {
-        console.log(error.response)
-        console.log('token 过期了')
         // 2.2发起请求，根据 refresh_token 重新请求一个有效的新 token （接口封装在 userAPI.js）
         const { data: res } = await exchangeTokenAPI(tokenInfo.refresh_token)
-        console.log(res)
         // 2.3更新 store 中的 token
         store.commit('updateTokenInfo', {
           token: res.data.token,
@@ -82,8 +79,6 @@ instance.interceptors.response.use(
         return instance(error.config)
       } catch {
         // token 和 refresh_token 都失效了
-        console.log(error.response)
-        console.log('token 和 refresh_token 都过期了')
         // 清空 vuex 和 localStorage 中的数据
         store.commit('cleanState')
         // 强制跳转到登录页，并通过路由的 query 查询参数，把当前用户访问未遂的路由地址带给登录页

@@ -1,17 +1,29 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Main from '@/views/Main/Main.vue'
-import Home from '@/views/Home/Home.vue'
-import User from '@/views/User/User.vue'
-import Login from '@/views/Login/Login.vue'
-import Search from '@/views/Search/Search.vue'
-import SearchResult from '@/views/SearchResult/SearchResult.vue'
-import ArticleDetail from '@/views/ArticleDetail/ArticleDetail.vue'
-import UserEdit from '@/views/UserEdit/UserEdit.vue'
-import Chat from '@/views/Chat/Chat.vue'
 
 // 导入 vuex 模块，以便判断用户是否登录
 import store from '@/store/index.js'
+// 基于 const Foo = () => import('./Foo.vue') 语法，改造组件的导入方式
+// 1. 将异步组件定义为返回一个 Promise 的工厂函数 (该函数返回的 Promise 应该 resolve 组件本身)
+// 2. 在 Webpack 2 中，我们可以使用动态 import 语法来定义代码分块点 (split point)
+// import Main from '@/views/Main/Main.vue'
+const Main = () => import('@/views/Main/Main.vue')
+// import Home from '@/views/Home/Home.vue'
+const Home = () => import('@/views/Home/Home.vue')
+// import User from '@/views/User/User.vue'
+const User = () => import('@/views/User/User.vue')
+// import Login from '@/views/Login/Login.vue'
+const Login = () => import('@/views/Login/Login.vue')
+// import Search from '@/views/Search/Search.vue'
+const Search = () => import('@/views/Search/Search.vue')
+// import SearchResult from '@/views/SearchResult/SearchResult.vue'
+const SearchResult = () => import('@/views/SearchResult/SearchResult.vue')
+// import ArticleDetail from '@/views/ArticleDetail/ArticleDetail.vue'
+const ArticleDetail = () => import('@/views/ArticleDetail/ArticleDetail.vue')
+// import UserEdit from '@/views/UserEdit/UserEdit.vue'
+const UserEdit = () => import('@/views/UserEdit/UserEdit.vue')
+// import Chat from '@/views/Chat/Chat.vue'
+const Chat = () => import('@/views/Chat/Chat.vue')
 
 Vue.use(VueRouter)
 
