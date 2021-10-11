@@ -24,9 +24,7 @@ npm run build
 npm run lint
 ```
 
-## TODO
-
-### 页面及功能
+## 页面及功能
 
 - [x] 登录页
   - 账号验证登录

@@ -3,6 +3,8 @@ const path = require('path')
 const themePath = path.join(__dirname, './src/theme.less')
 
 module.exports = {
+  // 保证部署是dist目录资源能被正确读取
+  publicPath: './',
   css: {
     loaderOptions: {
       less: {
